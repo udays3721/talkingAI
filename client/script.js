@@ -9,7 +9,7 @@ let load_Interval;
 function loader(element){
   element.textContent='';
   load_Interval=setInterval(()=>{
-    element.textContent +=".";
+    element.textContent +='.';
     if(element.textContent ==="...."){
       element.textContent='';
     }
@@ -67,7 +67,7 @@ const handle_submit=async(e)=>{
   loader(msg_div);
 
   //fetch data from server->get bot's response
-  const reponse=  await fetch('http://localhost:5000',{
+  const reponse=  await fetch('https://talking-ai.onrender.com',{
     method:'POST',
     headers :{
       'Content-Type':'application/json'
@@ -78,11 +78,11 @@ const handle_submit=async(e)=>{
   clearInterval(load_Interval);
   messageDiv.innerHTML='';
   if(response.ok){
-    const data=await response.json();
+    const data=await Response.json();
     const parsedData= data.bot.trim();
     type_text(messageDiv,parsedData);
   }else{
-    const err=await response.text();
+    const err=await Response.text();
     messageDiv.innerHTML="Something went wrong";
     alert(err);
   }
