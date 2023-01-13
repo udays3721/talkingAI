@@ -55,12 +55,12 @@ function chat_stripe(isAi,value,uniqueID){
 }
 const handle_submit=async(e)=>{
   e.preventDefault();
-  const data=new FormData(form);
+  const data=new FormData(form)
   //user's chatstripe
   chat_container.innerHTML +=chat_stripe(false,data.get('prompt'));
   form.reset();
   // bot's chatstripe
-  const uniqueID=generateID();
+  const uniqueID=generateID()
   chat_container.innerHTML +=chat_stripe(true," ",uniqueID);
   chat_container.scrollTop = chat_container.scrollHeight;
   const msg_div=document.getElementById(uniqueID);
@@ -90,7 +90,7 @@ const handle_submit=async(e)=>{
 }
 form.addEventListener('submit',handle_submit);
 form.addEventListener('keyup',(e)=>{
-  if(e.keycode===13){
+  if(e.keyCode===13){
     handle_submit(e);
   }
 })
