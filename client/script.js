@@ -77,7 +77,7 @@ const handle_submit=async(e)=>{
 
   clearInterval(load_Interval);
   messageDiv.innerHTML='';
-  if(response.ok){
+  if(Response.ok){
     const data=await Response.json();
     const parsedData= data.bot.trim();
     type_text(messageDiv,parsedData);
