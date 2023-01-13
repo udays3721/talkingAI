@@ -5,6 +5,7 @@ import cors from 'cors';
 import {Configuration,OpenAIApi} from 'openai';
 
 dotenv.config();
+console.log(process.env.OPEN_API_KEY)
 
 const configuration = new Configuration({
     apiKey: process.env.OPEN_API_KEY,
@@ -26,7 +27,7 @@ app.post('/',async(req,res)=>{
         const prompt= req.body.prompt;
         const response= await openai.createCompletion({
             model:"text-davinci-003",
-            prompt:'${prompt}',
+            prompt:`${prompt}`,
             temperature:0.5,
             max_tokens:2000,
             top_p:1,
@@ -35,7 +36,7 @@ app.post('/',async(req,res)=>{
 
         });
         res.status(200).send({
-            bot:response.data.choices[0].text
+            bot: response.data.choices[0].text
         })
     } catch (error) {
         console.log(error);

@@ -55,7 +55,7 @@ function chat_stripe(isAi,value,uniqueID){
 }
 const handle_submit=async(e)=>{
   e.preventDefault();
-  const data=new form_data(form);
+  const data=new FormData(form);
   //user's chatstripe
   chat_container.innerHTML +=chat_stripe(false,data.get('prompt'));
   form.reset();
