@@ -76,14 +76,14 @@ const handle_submit=async(e)=>{
   })
 
   clearInterval(load_Interval);
-  messageDiv.innerHTML='';
+  msg_div.innerHTML='';
   if(Response.ok){
     const data=await Response.json();
     const parsedData= data.bot.trim();
-    type_text(messageDiv,parsedData);
+    type_text(msg_div,parsedData);
   }else{
     const err=await Response.text();
-    messageDiv.innerHTML="Something went wrong";
+    msg_div.innerHTML="Something went wrong";
     alert(err);
   }
 
