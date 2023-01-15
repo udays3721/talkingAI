@@ -1,7 +1,7 @@
 import bot from "./assets/bot.svg";
 import user from "./assets/user.svg";
 
-const form= document .querySelector('form');
+const form=document.querySelector('form');
 const chat_container=document.querySelector('#chat_container');
 
 let load_Interval;
@@ -32,8 +32,8 @@ function generateID(){
   const timestamp=Date.now();
   const random_number=Math.random();
   const hexToString= random_number.toString(16);
+  console.log(`${timestamp}`);
   return `id-${timestamp}-${hexToString}`;
-  
 }
 
 function chat_stripe(isAi,value,uniqueID){
@@ -77,16 +77,15 @@ const handle_submit=async(e)=>{
 
   clearInterval(load_Interval);
   msg_div.innerHTML='';
-  if(Response.ok){
-    const data=await Response.json();
+  if(response.ok){
+    const data=await response.json();
     const parsedData= data.bot.trim();
     type_text(msg_div,parsedData); 
   }else{
-    const err=await Response.text();
+    const err=await response.text;
     msg_div.innerHTML="Something went wrong";
     alert(err);
   }
-  
 
 }
 form.addEventListener('submit',handle_submit);
