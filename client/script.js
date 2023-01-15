@@ -1,7 +1,7 @@
 import bot from "./assets/bot.svg";
 import user from "./assets/user.svg";
 
-const form=document.querySelector('form');
+const form= document .querySelector('form');
 const chat_container=document.querySelector('#chat_container');
 
 let load_Interval;
@@ -80,12 +80,13 @@ const handle_submit=async(e)=>{
   if(Response.ok){
     const data=await Response.json();
     const parsedData= data.bot.trim();
-    type_text(msg_div,parsedData);
+    type_text(msg_div,parsedData); 
   }else{
     const err=await Response.text();
     msg_div.innerHTML="Something went wrong";
     alert(err);
   }
+  
 
 }
 form.addEventListener('submit',handle_submit);
