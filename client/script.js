@@ -17,7 +17,7 @@ function loader(element){
 
 }
 function type_text(element,text){
-  let index=0;
+  let index=0
   let interval=setInterval(()=>{
     if (index< text.length){
       element.innerHTML +=text.charAt(index);
