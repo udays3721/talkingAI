@@ -67,7 +67,8 @@ const handle_submit=async(e)=>{
   loader(msg_div);
 
   //fetch data from server->get bot's response
-  const response=  await fetch('https://talking-ai.onrender.com',{
+  const response=
+    await fetch('https://talking-ai.onrender.com',{
     method:'POST',
     headers :{
       'Content-Type':'application/json'
@@ -82,7 +83,7 @@ const handle_submit=async(e)=>{
     const parsedData= data.bot.trim();
     type_text(msg_div,parsedData); 
   }else{
-    const err=await response.text;
+    const err=await response.text();
     msg_div.innerHTML="Something went wrong";
     alert(err);
   }
