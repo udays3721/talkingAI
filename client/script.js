@@ -67,7 +67,7 @@ const handle_submit=async(e)=>{
   loader(msg_div);
 
   //fetch data from server->get bot's response
-  const reponse=  await fetch('https://talking-ai.onrender.com',{
+  const response=  await fetch('https://talking-ai.onrender.com',{
     method:'POST',
     headers :{
       'Content-Type':'application/json'
