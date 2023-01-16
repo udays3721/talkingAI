@@ -36,7 +36,9 @@ function generateID(){
   const timestamp = Date.now();
   const random_number = Math.random();
   const hexToString = random_number.toString(16);
+
   console.log(`${timestamp}`);
+
   return `id-${timestamp}-${hexToString}`;
 }
 
@@ -79,13 +81,15 @@ const handle_submit= async (e) => {
   loader(msg_div);
 
   //fetch data from server->get bot's response
-   //https://talking-ai.onrender.com' the site to connect to
-  const response = await fetch('http://localhost:5000',{
+   //http://localhost:5000
+  const response = await fetch('https://talking-ai.onrender.com', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
+
     body: JSON.stringify({
+
       prompt: data.get('prompt')
     
     })
@@ -99,10 +103,13 @@ const handle_submit= async (e) => {
     const parsedData = data.bot.trim();
 
     type_text(msg_div,parsedData); 
+
   } else {
+
     const err = await response.text();
     msg_div.innerHTML = "Something went wrong";
     alert(err);
+    
   }
 
 }
