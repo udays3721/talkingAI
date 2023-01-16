@@ -1,26 +1,30 @@
 import bot from "./assets/bot.svg";
 import user from "./assets/user.svg";
 
-const form=document.querySelector('form');
-const chat_container=document.querySelector('#chat_container');
+const form = document.querySelector ('form') ;
+const chat_container = document.querySelector ('#chat_container');
 
 let load_Interval;
 
-function loader(element){
-  element.textContent='';
-  load_Interval=setInterval(()=>{
+function loader (element){
+  element.textContent = '';
+
+  load_Interval = setInterval (() => {
+
     element.textContent +='.';
+
     if(element.textContent ==="...."){
       element.textContent='';
     }
   },300)
 
 }
-function type_text(element,text){
-  let index=0
-  let interval=setInterval(()=>{
-    if (index< text.length){
-      element.innerHTML +=text.charAt(index);
+function type_text(element, text) {
+  let index = 0
+
+  let interval = setInterval(() => {
+    if (index < text.length){
+      element.innerHTML += text.charAt(index);
       index++;
     }else{
       clearInterval(interval);
@@ -29,69 +33,82 @@ function type_text(element,text){
 }
 
 function generateID(){
-  const timestamp=Date.now();
-  const random_number=Math.random();
-  const hexToString= random_number.toString(16);
+  const timestamp = Date.now();
+  const random_number = Math.random();
+  const hexToString = random_number.toString(16);
   console.log(`${timestamp}`);
   return `id-${timestamp}-${hexToString}`;
 }
 
 function chat_stripe(isAi,value,uniqueID){
+
   return(
     `
-    <div class="wrapper ${isAi && 'ai'}">
-      <div class='chat'>
-        <div class='profile'>
+    <div class ="wrapper ${isAi && 'ai'}">
+      <div class= "chat">
+        <div class= "profile">
           <img
-            src='${isAi ? bot:user}'
-            alt='${isAi ? bot:user}'
-          ></img>
+            src=${isAi ? bot : user}
+            alt="${isAi ? 'bot' : 'user'}"
+          />
         </div>
-        <div class='message' id='${uniqueID}'>${value}</div>
+        <div class="message" id=${uniqueID}>${value}</div>
       </div>
     </div>
     `
   )
 }
-const handle_submit=async(e)=>{
+const handle_submit= async (e) => {
   e.preventDefault();
-  const data=new FormData(form)
+
+  const data = new FormData(form)
+
   //user's chatstripe
-  chat_container.innerHTML +=chat_stripe(false,data.get('prompt'));
-  form.reset();
+  chat_container.innerHTML += chat_stripe(false, data.get('prompt'));
+
+  form.reset()
+  
   // bot's chatstripe
-  const uniqueID=generateID()
-  chat_container.innerHTML +=chat_stripe(true," ",uniqueID);
+  const uniqueID = generateID()
+  chat_container.innerHTML += chat_stripe(true, " ", uniqueID);
+
   chat_container.scrollTop = chat_container.scrollHeight;
-  const msg_div=document.getElementById(uniqueID);
+
+  const msg_div = document.getElementById(uniqueID);
+
   loader(msg_div);
 
   //fetch data from server->get bot's response
-  const response=
-    await fetch('https://talking-ai.onrender.com',{
-    method:'POST',
-    headers :{
-      'Content-Type':'application/json'
+   //https://talking-ai.onrender.com' the site to connect to
+  const response = await fetch('http://localhost:5000',{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify({prompt:data.get('prompt')})
+    body: JSON.stringify({
+      prompt: data.get('prompt')
+    
+    })
   })
 
   clearInterval(load_Interval);
   msg_div.innerHTML='';
-  if(response.ok){
-    const data=await response.json();
-    const parsedData= data.bot.trim();
+
+  if(response.ok) {
+    const data = await response.json();
+    const parsedData = data.bot.trim();
+
     type_text(msg_div,parsedData); 
-  }else{
-    const err=await response.text();
-    msg_div.innerHTML="Something went wrong";
+  } else {
+    const err = await response.text();
+    msg_div.innerHTML = "Something went wrong";
     alert(err);
   }
 
 }
 form.addEventListener('submit',handle_submit);
-form.addEventListener('keyup',(e)=>{
-  if(e.keyCode===13){
+form.addEventListener('keyup', (e) => {
+  if(e.keyCode===13) {
     handle_submit(e);
   }
 })
